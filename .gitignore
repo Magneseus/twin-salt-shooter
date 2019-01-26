@@ -34,3 +34,8 @@ sysinfo.txt
 # Builds
 *.apk
 *.unitypackage
+
+# Rewired stuff
+Assets/Rewired/Examples/
+[Rr]ewiredBackup/
+Assets/Rewired/Examples.meta
