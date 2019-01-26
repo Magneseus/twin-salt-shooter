@@ -292,6 +292,16 @@ Prefab:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 114902127148031724, guid: adc02c2deb767ca4a8786f846d2048eb,
+        type: 2}
+      propertyPath: _userData.actions.Array.size
+      value: 21
+      objectReference: {fileID: 0}
+    - target: {fileID: 114902127148031724, guid: adc02c2deb767ca4a8786f846d2048eb,
+        type: 2}
+      propertyPath: _userData.actionCategoryMap.list.Array.data[0].actionIds.Array.size
+      value: 21
+      objectReference: {fileID: 0}
     - target: {fileID: 4073975386334246, guid: adc02c2deb767ca4a8786f846d2048eb, type: 2}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -323,6 +333,41 @@ Prefab:
     - target: {fileID: 4073975386334246, guid: adc02c2deb767ca4a8786f846d2048eb, type: 2}
       propertyPath: m_RootOrder
       value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 114902127148031724, guid: adc02c2deb767ca4a8786f846d2048eb,
+        type: 2}
+      propertyPath: _userData.actions.Array.data[21]._id
+      value: 29
+      objectReference: {fileID: 0}
+    - target: {fileID: 114902127148031724, guid: adc02c2deb767ca4a8786f846d2048eb,
+        type: 2}
+      propertyPath: _userData.actions.Array.data[21]._name
+      value: Action0
+      objectReference: {fileID: 0}
+    - target: {fileID: 114902127148031724, guid: adc02c2deb767ca4a8786f846d2048eb,
+        type: 2}
+      propertyPath: _userData.actions.Array.data[21]._type
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 114902127148031724, guid: adc02c2deb767ca4a8786f846d2048eb,
+        type: 2}
+      propertyPath: _userData.actions.Array.data[21]._descriptiveName
+      value: Action0
+      objectReference: {fileID: 0}
+    - target: {fileID: 114902127148031724, guid: adc02c2deb767ca4a8786f846d2048eb,
+        type: 2}
+      propertyPath: _userData.actions.Array.data[21]._userAssignable
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114902127148031724, guid: adc02c2deb767ca4a8786f846d2048eb,
+        type: 2}
+      propertyPath: _userData.actionCategoryMap.list.Array.data[0].actionIds.Array.data[21]
+      value: 29
+      objectReference: {fileID: 0}
+    - target: {fileID: 114902127148031724, guid: adc02c2deb767ca4a8786f846d2048eb,
+        type: 2}
+      propertyPath: _userData.actionIdCounter
+      value: 30
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: adc02c2deb767ca4a8786f846d2048eb, type: 2}
