@@ -10,6 +10,7 @@ public class DualStickMovement : MonoBehaviour
     public bool applyLookRotationToTransform = true;
     public Vector3 lookRotation;
     public Vector3 lookDirection;
+    public bool disableMovement = false;
 
     private Rewired.Player rePlayer;
     private CharacterController cc;
@@ -24,6 +25,9 @@ public class DualStickMovement : MonoBehaviour
 	// Update is called once per frame
 	void Update ()
     {
+        if (disableMovement)
+            return;
+
         // Movement
         Vector3 moveVec = new Vector3
         {
