@@ -7,16 +7,35 @@ public class PlayerScript : MonoBehaviour
 {
     public int playerId = 0;
 
+    private Dictionary<string, PlayerUsable> actionMap;
     private Rewired.Player rePlayer;
     private CharacterController cc;
-    private Fire_Projectile firescript;
+
 
 	// Use this for initialization
 	void Start ()
     {
+        actionMap = new Dictionary<string, PlayerUsable>();
         rePlayer = ReInput.players.GetPlayer(playerId);
         cc = GetComponent<CharacterController>();
-        firescript = GetComponent<Fire_Projectile>();
+
+
+        // ADD CONTROLS HERE
+        actionMap.Add("RBumper", GetComponent<Fire_Projectile>());
+        
+
+        // Assign Use Locations if they exist
+        foreach (KeyValuePair<string, PlayerUsable> action in actionMap)
+        {
+            for (int i = 0; i < transform.childCount; i++)
+            {
+                Transform t = transform.GetChild(i);
+                if (t.gameObject.name == "UseLocation" + action.Key)
+                {
+                    action.Value.useLocation = t.gameObject;
+                }
+            }
+        }
 	}
 	
 	// Update is called once per frame
@@ -27,11 +46,12 @@ public class PlayerScript : MonoBehaviour
 
     private void DoInput()
     {
-        bool fire = rePlayer.GetButton("RBumper");
-
-        if (fire)
+        foreach (KeyValuePair<string, PlayerUsable> action in actionMap)
         {
-            firescript.FireBullet();
+            if (rePlayer.GetButton(action.Key))
+            {
+                action.Value.Use();
+            }
         }
     }
 }

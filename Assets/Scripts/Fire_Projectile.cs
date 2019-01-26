@@ -2,10 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Fire_Projectile : MonoBehaviour {
+public class Fire_Projectile : PlayerUsable {
 
     public GameObject bullet;
-    public GameObject fireLocation;
 
     private PlayerScript player;
 
@@ -15,10 +14,10 @@ public class Fire_Projectile : MonoBehaviour {
         player = GetComponent<PlayerScript>();
     }
 
-    public void FireBullet()
+    public override void Use()
     {
         GameObject newBullet;
-        newBullet = Instantiate(bullet, fireLocation.transform.position, player.transform.rotation);
+        newBullet = Instantiate(bullet, useLocation.transform.position, player.transform.rotation);
         newBullet.transform.rotation = player.transform.rotation;
         newBullet.GetComponent<Projectile>().SetPlayerNumber(player.playerId);
     }
