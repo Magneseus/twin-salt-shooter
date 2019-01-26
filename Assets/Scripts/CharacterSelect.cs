@@ -12,12 +12,20 @@ public class CharacterSelect : MonoBehaviour {
     private bool[] xControl;
     private Rewired.Player[] p;
     public Color[] colors;
+    public GameObject[] hats;
     public GameObject[] guys;
+    public GameObject[] hatPos;
+
     private Material[] guysMat;
+    private GameObject[] currentHatObject;
+
     private int[] currentColor;
+    private int[] currentHat;
     private int colorArraySize;
+    private int hatArraySize;
     private bool[] isPlayerLockedIn;
     public Text countDownText;
+    public float deadZone;
 
     private bool countDown;
     private float countDownTimer;
@@ -29,19 +37,26 @@ public class CharacterSelect : MonoBehaviour {
         countDownTimer = 5;
         //p1 = ReInput.players.GetPlayer(0);
         currentColor = new int[4];
+        currentHat = new int[4];
         p = new Rewired.Player[4];
         joystickControlHor = new bool[4];
         joystickControlVert = new bool[4];
         xControl = new bool[4];
         isPlayerLockedIn = new bool[4];
         countDownText.gameObject.SetActive(false);
+        currentHatObject = new GameObject[4];
 
         guysMat = new Material[4];
         for (int i = 0; i < 4; i++)
         {
             currentColor[i] = i;
+            currentHat[i] = i;
             guysMat[i] = guys[i].GetComponent<Renderer>().materials[3];
             guysMat[i].color = colors[currentColor[i]];
+
+            currentHatObject[i] = Instantiate(hats[i], hatPos[i].transform.position, Quaternion.identity, hatPos[i].transform);
+            currentHatObject[i].GetComponentInChildren<Renderer>().material.color = colors[i];
+
             p[i] = ReInput.players.GetPlayer(i);
             joystickControlHor[i] = true;
             joystickControlVert[i] = true;
@@ -49,6 +64,7 @@ public class CharacterSelect : MonoBehaviour {
             isPlayerLockedIn[i] = false;
         }
         colorArraySize = colors.Length-1;
+        hatArraySize = hats.Length-1;
     }
 
     // Update is called once per frame
@@ -71,6 +87,7 @@ public class CharacterSelect : MonoBehaviour {
             {
                 //check for joystick input
                 CheckJoystickHor(i);
+                CheckJoystickVer(i);
             }
             //check for x button
             CheckConfirmButton(i);
@@ -115,12 +132,12 @@ public class CharacterSelect : MonoBehaviour {
 
     private void CheckJoystickHor(int playerId)
     {
-        if (p[playerId].GetAxis("LStick Horizontal") < -0.05 || p[playerId].GetAxis("LStick Horizontal") > 0.05)
+        if (p[playerId].GetAxis("LStick Horizontal") < -deadZone || p[playerId].GetAxis("LStick Horizontal") > deadZone)
         {
             if (joystickControlHor[playerId])
             {
                 joystickControlHor[playerId] = false;
-                if(p[playerId].GetAxis("LStick Horizontal") < -0.05)
+                if(p[playerId].GetAxis("LStick Horizontal") < -deadZone)
                 {
                     ChangeColor(false, playerId);
                 }
@@ -135,6 +152,30 @@ public class CharacterSelect : MonoBehaviour {
             joystickControlHor[playerId] = true;
         }
     }
+
+    private void CheckJoystickVer(int playerId)
+    {
+        if (p[playerId].GetAxis("LStick Vertical") < -deadZone || p[playerId].GetAxis("LStick Vertical") > deadZone)
+        {
+            if (joystickControlVert[playerId])
+            {
+                joystickControlVert[playerId] = false;
+                if (p[playerId].GetAxis("LStick Vertical") < -deadZone)
+                {
+                    ChangeHat(false, playerId);
+                }
+                else
+                {
+                    ChangeHat(true, playerId);
+                }
+            }
+        }
+        else
+        {
+            joystickControlVert[playerId] = true;
+        }
+    }
+
 
     private void ChangeColor(bool isLeft, int playerId)
     {
@@ -159,6 +200,7 @@ public class CharacterSelect : MonoBehaviour {
             {
                 currentColor[playerId] = newColorToCheck;
                 guysMat[playerId].color = colors[currentColor[playerId]];
+                currentHatObject[playerId].GetComponentInChildren<Renderer>().material.color = colors[currentColor[playerId]];
                 newColorSelected = true;
             }
         }
@@ -177,16 +219,58 @@ public class CharacterSelect : MonoBehaviour {
         return isFree;
     }
 
+    //HATS HATS HATS
+
+    private void ChangeHat(bool isLeft, int playerId)
+    {
+        int addNum = 1;
+        addNum = isLeft ? addNum * -1 : addNum;
+        int newHatToCheck = currentHat[playerId];
+        bool newHatSelected = false;
+
+        while (!newHatSelected)
+        {
+            newHatToCheck += addNum;
+            if (newHatToCheck > hatArraySize)
+            {
+                newHatToCheck = 0;
+            }
+            else if (newHatToCheck < 0)
+            {
+                newHatToCheck = hatArraySize;
+            }
+
+            if (CheckIfHatFree(newHatToCheck))
+            {
+                Destroy(currentHatObject[playerId]);
+                currentHatObject[playerId] = Instantiate(hats[newHatToCheck], hatPos[playerId].transform.position, Quaternion.identity, hatPos[playerId].transform);
+                currentHat[playerId] = newHatToCheck;
+                currentHatObject[playerId].GetComponentInChildren<Renderer>().material.color = colors[currentColor[playerId]];
+                newHatSelected = true;
+            }
+        }
+    }
+    
+
+    private bool CheckIfHatFree(int num)
+    {
+        bool isFree = true;
+        for (int i = 0; i < 4; i++)
+        {
+            if (currentHat[i] == num)
+            {
+                isFree = false;
+            }
+        }
+        return isFree;
+    }
+
+
     private void CheckConfirmButton(int playerId)
     {
-        
         if(p[playerId].GetButtonDown("A Button"))
         {
             isPlayerLockedIn[playerId] = isPlayerLockedIn[playerId] ? false : true;
-            //print("player: " + playerId + " is confirmed?: " + isPlayerLockedIn[playerId]);
         }
-
-        
-
     }
 }
