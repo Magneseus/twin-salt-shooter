@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Fire : MonoBehaviour {
+public class Fire_Projectile : MonoBehaviour {
 
     public GameObject bullet;
     public GameObject fireLocation;

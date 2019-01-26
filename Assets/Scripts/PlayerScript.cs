@@ -9,14 +9,14 @@ public class PlayerScript : MonoBehaviour
 
     private Rewired.Player rePlayer;
     private CharacterController cc;
-    private Fire firescript;
+    private Fire_Projectile firescript;
 
 	// Use this for initialization
 	void Start ()
     {
         rePlayer = ReInput.players.GetPlayer(playerId);
         cc = GetComponent<CharacterController>();
-        firescript = GetComponent<Fire>();
+        firescript = GetComponent<Fire_Projectile>();
 	}
 	
 	// Update is called once per frame
