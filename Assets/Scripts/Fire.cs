@@ -15,7 +15,15 @@ public class Fire : MonoBehaviour {
 	void Update () {
         if(Input.GetButton("Fire1"))
         {
-            Instantiate(bullet, transform.position, Quaternion.identity);
+            FireBullet();
         }
 	}
+
+    private void FireBullet()
+    {
+        int playerNum = Random.Range(1, 5);
+        GameObject newBullet;
+        newBullet = Instantiate(bullet, transform.position, Quaternion.identity);
+        newBullet.GetComponent<Projectile>().SetPlayerNumber(playerNum);
+    }
 }

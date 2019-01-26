@@ -110,3 +110,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxLifeTime: 3
   speed: 100
+  rotationOffset: 2
