@@ -1,70 +1,63 @@
 fileFormatVersion: 2
-guid: e2c20e7908f6c08498d225e154623778
+guid: 26f3c8e678672a542b1ececf72895e61
 ModelImporter:
   serializedVersion: 23
   fileIDToRecycleName:
     100000: bottom
-    100002: //RootNode
-    100004: clothing_accent
-    100006: dude
-    100008: eye
-    100010: eye2
-    100012: hair
-    100014: head
-    100016: mouth
-    100018: nose
-    100020: polySurface13
-    100022: top
+    100002: bowtie
+    100004: //RootNode
+    100006: eyes
+    100008: hair
+    100010: head
+    100012: mouth
+    100014: nose
+    100016: shirt
+    100018: shirt_accent
     400000: bottom
-    400002: //RootNode
-    400004: clothing_accent
-    400006: dude
-    400008: eye
-    400010: eye2
-    400012: hair
-    400014: head
-    400016: mouth
-    400018: nose
-    400020: polySurface13
-    400022: top
+    400002: bowtie
+    400004: //RootNode
+    400006: eyes
+    400008: hair
+    400010: head
+    400012: mouth
+    400014: nose
+    400016: shirt
+    400018: shirt_accent
     2100000: pasted__pasted__skin2
-    2100002: pasted__pasted__lambert3
-    2100004: pasted__pasted__lambert4
+    2100002: pasted__pasted__lambert5
+    2100004: pasted__pasted__lambert3
     2100006: pasted__lambert8
     2100008: pasted__pasted__lambert6
-    2100010: pasted__pasted__lambert5
+    2100010: lambert1
     2100012: pasted__lambert7
-    2100014: lambert1
+    2100014: pasted__pasted__lambert4
     2300000: bottom
-    2300002: clothing_accent
-    2300004: eye
-    2300006: eye2
-    2300008: hair
-    2300010: head
-    2300012: mouth
-    2300014: nose
-    2300016: polySurface13
-    2300018: top
+    2300002: bowtie
+    2300004: eyes
+    2300006: hair
+    2300008: head
+    2300010: mouth
+    2300012: nose
+    2300014: shirt
+    2300016: shirt_accent
     3300000: bottom
-    3300002: clothing_accent
-    3300004: eye
-    3300006: eye2
-    3300008: hair
-    3300010: head
-    3300012: mouth
-    3300014: nose
-    3300016: polySurface13
-    3300018: top
+    3300002: bowtie
+    3300004: eyes
+    3300006: hair
+    3300008: head
+    3300010: mouth
+    3300012: nose
+    3300014: shirt
+    3300016: shirt_accent
     4300000: head
-    4300002: hair
-    4300004: eye
-    4300006: eye2
-    4300008: nose
-    4300010: mouth
-    4300012: bottom
-    4300014: top
-    4300016: polySurface13
-    4300018: clothing_accent
+    4300002: shirt
+    4300004: hair
+    4300006: nose
+    4300008: mouth
+    4300010: bottom
+    4300012: shirt_accent
+    4300014: eyes
+    4300016: bowtie
   externalObjects: {}
   materials:
     importMaterials: 1
