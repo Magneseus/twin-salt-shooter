@@ -71,6 +71,7 @@ GameObject:
   - component: {fileID: 4512495448225774}
   - component: {fileID: 114722616847836516}
   - component: {fileID: 114275639327076790}
+  - component: {fileID: 114138413051596270}
   - component: {fileID: 143546106215977784}
   m_Layer: 0
   m_Name: Player
@@ -218,6 +219,21 @@ MeshFilter:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1707243663602398}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &114138413051596270
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1898142682394170}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 50d7a2251783e714b9491d72797ad2e0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerId: 0
+  applyLookRotationToTransform: 1
+  lookRotation: {x: 0, y: 0, z: 0}
+  lookDirection: {x: 0, y: 0, z: 0}
 --- !u!114 &114275639327076790
 MonoBehaviour:
   m_ObjectHideFlags: 1
