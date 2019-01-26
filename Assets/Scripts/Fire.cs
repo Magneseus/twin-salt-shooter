@@ -5,25 +5,21 @@ using UnityEngine;
 public class Fire : MonoBehaviour {
 
     public GameObject bullet;
+    public GameObject fireLocation;
 
-	// Use this for initialization
-	void Start () {
-		
-	}
-	
-	// Update is called once per frame
-	void Update () {
-        if(Input.GetButton("Fire1"))
-        {
-            FireBullet();
-        }
-	}
+    private PlayerScript player;
 
-    private void FireBullet()
+
+    public void Start()
     {
-        int playerNum = Random.Range(1, 5);
+        player = GetComponent<PlayerScript>();
+    }
+
+    public void FireBullet()
+    {
         GameObject newBullet;
-        newBullet = Instantiate(bullet, transform.position, Quaternion.identity);
-        newBullet.GetComponent<Projectile>().SetPlayerNumber(playerNum);
+        newBullet = Instantiate(bullet, fireLocation.transform.position, player.transform.rotation);
+        newBullet.transform.rotation = player.transform.rotation;
+        newBullet.GetComponent<Projectile>().SetPlayerNumber(player.playerId);
     }
 }

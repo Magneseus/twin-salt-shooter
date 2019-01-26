@@ -9,12 +9,14 @@ public class PlayerScript : MonoBehaviour
 
     private Rewired.Player rePlayer;
     private CharacterController cc;
+    private Fire firescript;
 
 	// Use this for initialization
 	void Start ()
     {
         rePlayer = ReInput.players.GetPlayer(playerId);
         cc = GetComponent<CharacterController>();
+        firescript = GetComponent<Fire>();
 	}
 	
 	// Update is called once per frame
@@ -29,7 +31,24 @@ public class PlayerScript : MonoBehaviour
         moveVec.x = rePlayer.GetAxis("LStick Horizontal");
         moveVec.z = rePlayer.GetAxis("LStick Vertical");
 
-
         cc.Move(moveVec * 3.0f * Time.deltaTime);
+
+        Vector3 lookVector = new Vector3();
+        lookVector.x = rePlayer.GetAxis("RStick Horizontal") * -1;
+        lookVector.y = rePlayer.GetAxis("RStick Vertical");
+
+        if (lookVector.sqrMagnitude > 0)
+        {
+            float __y = Vector2.SignedAngle((new Vector2(-0.5f, 0.5f)), lookVector);
+            __y += 45.0f;
+            cc.transform.rotation = Quaternion.Euler(0, __y, 0);
+        }
+
+        bool fire = rePlayer.GetButton("RBumper");
+
+        if (fire)
+        {
+            firescript.FireBullet();
+        }
     }
 }

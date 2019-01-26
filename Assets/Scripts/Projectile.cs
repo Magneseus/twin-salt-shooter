@@ -14,13 +14,18 @@ public class Projectile : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
         currentLife = 0;
-        transform.localEulerAngles = new Vector3(Random.Range(-rotationOffset, rotationOffset), Random.Range(-rotationOffset, rotationOffset), Random.Range(-rotationOffset, rotationOffset));
+
+        transform.Rotate(new Vector3(Random.Range(-rotationOffset, rotationOffset), Random.Range(-rotationOffset, rotationOffset), Random.Range(-rotationOffset, rotationOffset)));
+        Vector3 i_hate_rotations = transform.rotation.eulerAngles;
+
+        i_hate_rotations.y /= 2.0f;
+        transform.rotation = Quaternion.Euler(i_hate_rotations);
 	}
 	
 	// Update is called once per frame
 	void Update () {
         currentLife += Time.deltaTime;
-        transform.Translate(Vector3.forward * Time.deltaTime * speed);
+        transform.Translate(transform.forward * Time.deltaTime * speed);
         if (currentLife >= maxLifeTime)
         {
             Destroy(gameObject);
@@ -30,7 +35,6 @@ public class Projectile : MonoBehaviour {
     public void SetPlayerNumber(int num)
     {
         playerThatFiredMe = num;
-        print("My number is " + playerThatFiredMe);
     }
 
     void OnTriggerEnter(Collider col)
