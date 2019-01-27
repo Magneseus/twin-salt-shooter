@@ -10,20 +10,37 @@ public class Damage : MonoBehaviour
     public int numTicks = 1;
 
     private float timeCounter = 0f;
+    private int ticksOfDamage = 0;
     private Health damageTarget = null;
+    private System.Action OnDamageFinishedCallback = null;
 
-	// Update is called once per frame
-	void Update()
+
+    public void SetOnDamageFinishedCallback(System.Action callback)
+    {
+        OnDamageFinishedCallback = callback;
+    }
+
+    // Update is called once per frame
+    void Update()
     {
         if (damageTarget)
         {
             timeCounter += Time.deltaTime;
             while (timeCounter >= secsPerTick)
             {
+                if (ticksOfDamage >= numTicks)
+                {
+                    damageTarget = null;
+
+                    if (OnDamageFinished != null)
+                        OnDamageFinished();
+                }
+
                 if (damageTarget)
                     damageTarget.DealDamage(damagePerTick);
 
                 timeCounter -= secsPerTick;
+                ticksOfDamage++;
             }
         }
 	}
