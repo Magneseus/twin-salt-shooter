@@ -10,6 +10,8 @@ TagManager:
   - PlayerDamage
   - Ghost
   - Enemy
+  - Waypoint
+  - PlayerGhost
   layers:
   - Default
   - TransparentFX

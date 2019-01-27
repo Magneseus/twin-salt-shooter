@@ -17,9 +17,9 @@ public class EndState : MonoBehaviour {
 
     private void OnTriggerEnter(Collider collision)
     {
-        if (this.gameObject.tag == "Player")
+        if (collision.gameObject.tag == "Player")
         {
-
+            //gameover
         }
     }
 }

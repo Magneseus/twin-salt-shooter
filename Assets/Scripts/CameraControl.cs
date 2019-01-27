@@ -45,6 +45,13 @@ public class CameraControl : MonoBehaviour
                 start = true;
 
             }
+            GameObject[] newerTargets = GameObject.FindGameObjectsWithTag("PlayerGhost");
+            for (int i = 0; i < newerTargets.Length; i++)
+            {
+                m_Targets.Add(newerTargets[i]);
+                start = true;
+
+            }
         }
 
     }
