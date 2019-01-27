@@ -11,6 +11,7 @@ public class Boid : MonoBehaviour {
     public float alignDivisor = 8.0f;
     public float seperationDivisor = 8.0f;
 
+    public Leader leader;
     private Rigidbody rb;
 
     public bool selected = false;
@@ -45,6 +46,7 @@ public class Boid : MonoBehaviour {
         }
 
         rb.velocity += GetVelocity();
+        LimitVelocity();
         gameObject.transform.LookAt(rb.velocity + gameObject.transform.position);
 	}
 
@@ -75,6 +77,14 @@ public class Boid : MonoBehaviour {
             crowdDirection += (b_rb.velocity / nearby.Count) * b.weight;
         }
 
+        if (leader != null)
+        {
+            if (Vector3.Distance(rb.position, leader.gameObject.transform.position) > 1)
+            {
+                return GoToTarget(rb.position, leader.gameObject.transform.position) + separation / 4.0f;
+            }
+        }
+
         center = (center / nearby.Count) - rb.position;
         Vector3 add = center/cohesionDivisor + crowdDirection/alignDivisor + separation/seperationDivisor;
 
@@ -92,9 +102,23 @@ public class Boid : MonoBehaviour {
 
         towards = targ - loc;
         float dist = Vector3.Distance(targ, loc);
-        towards = towards.normalized * ((boid_radius / 2) - dist);
+        towards = towards.normalized * (Mathf.Pow(dist - 10, 2) / 5);
 
         return towards;
+    }
+
+    public void LimitVelocity()
+    {
+        if(rb.velocity.sqrMagnitude > 10)
+        {
+            rb.velocity = rb.velocity.normalized * 10.0f;
+        }
+    }
+
+    public void LoseLeader()
+    {
+        leader = null;
+        rb.velocity = new Vector3(0, 0, 0);
     }
 
     public void OnTriggerEnter(Collider c)
