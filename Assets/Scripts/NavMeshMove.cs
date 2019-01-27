@@ -19,7 +19,7 @@ public class NavMeshMove : MonoBehaviour
 
     private void Start()
     {
-        
+
     }
 
     public void SetStoppingDistance(float newDist)

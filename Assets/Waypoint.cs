@@ -4,9 +4,10 @@ using UnityEngine;
 
 public class Waypoint : MonoBehaviour {
     public bool isActive = true;
+    public bool isInside = false;
 
-	// Use this for initialization
-	void Start () {
+    // Use this for initialization
+    void Start () {
 		
 	}
 	

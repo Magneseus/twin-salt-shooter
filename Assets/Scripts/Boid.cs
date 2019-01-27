@@ -2,7 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Boid : MonoBehaviour {
+public class Boid : MonoBehaviour
+{
     private List<Boid> nearby;
     private float boid_radius;
     public float weight = 1.0f;
@@ -16,23 +17,29 @@ public class Boid : MonoBehaviour {
     public Vector3 destination;
     private Rigidbody rb;
     private bool toWaypoint = false;
+    private Waypoint lastWaypoint;
+    private Waypoint currentWaypoint;
 
     private List<Waypoint> entrances;
+    private List<PlayerScript> players;
+
 
     void Awake()
     {
         nearby = new List<Boid>();
         entrances = new List<Waypoint>();
+        players = new List<PlayerScript>();
     }
 
-	// Use this for initialization
-	void Start () {
+    // Use this for initialization
+    void Start()
+    {
         navmesh = GetComponent<NavMeshMove>();
         boid_radius = 1;
         SphereCollider[] sc = GetComponentsInChildren<SphereCollider>();
-        foreach(SphereCollider sc1 in sc)
+        foreach (SphereCollider sc1 in sc)
         {
-            if(sc1.isTrigger)
+            if (sc1.isTrigger)
             {
                 boid_radius = sc1.radius;
             }
@@ -40,23 +47,28 @@ public class Boid : MonoBehaviour {
 
         rb = GetComponent<Rigidbody>();
         rb.velocity = new Vector3(0, 0, 0);
-        
+
         //navmesh.SetTarget(destination);
 
         GameObject[] go = GameObject.FindGameObjectsWithTag("Waypoint");
-        foreach(GameObject _go in go)
+        foreach (GameObject _go in go)
         {
             entrances.Add(_go.GetComponentInChildren<Waypoint>());
         }
-    }
-	
-	void FixedUpdate () {
 
-		if(move)
+        GameObject[] pgo = GameObject.FindGameObjectsWithTag("Player");
+        foreach (GameObject _go in pgo)
         {
-            MoveToWaypoint();
-            move = false;
+            players.Add(_go.GetComponent<PlayerScript>());
         }
+
+        rb.velocity = new Vector3(Random.Range(-5, 5), 0, Random.Range(-5, 5));
+
+        MoveToWaypoint();
+    }
+
+    void FixedUpdate()
+    {
         Vector3 temp = GetVelocity();
         rb.velocity += temp;
 
@@ -66,7 +78,7 @@ public class Boid : MonoBehaviour {
             NavToTarget(leader.transform.position);
 
         navmesh.UpdatePosition(transform.position);
-	}
+    }
 
     private Vector3 GetVelocity()
     {
@@ -103,12 +115,12 @@ public class Boid : MonoBehaviour {
                 //return GoToTarget(rb.position, leader.gameObject.transform.position) + separation / 4.0f;
             }
         }
-        
-        if(nearby.Count > 0)
+
+        if (nearby.Count > 0)
             center = (center / nearby.Count) - rb.position;
 
         Vector3 add = new Vector3(0, 0, 0);
-        if(!navmesh.TargetReached())
+        if (!navmesh.TargetReached())
         {
             target = navmesh.GetMoveDirection();
             add = target.normalized;
@@ -116,17 +128,31 @@ public class Boid : MonoBehaviour {
         }
         else // we reached target
         {
-            if(toWaypoint)
+            if (toWaypoint)
             {
                 navmesh.ResetTarget();
-                if(leader == null)
+                if (leader == null)
                     rb.velocity = new Vector3(0, 0, 0);
                 toWaypoint = false;
+
+                // then we're going by waypoint
+                if(leader == null)
+                {
+
+                    if(currentWaypoint != null && currentWaypoint.isInside)
+                    {
+                        MoveToPlayer();
+                    }
+                    else
+                    {
+                        MoveToWaypoint();
+                    }
+                }
                 return new Vector3(0, 0, 0);
             }
         }
 
-        add += center / cohesionDivisor + crowdDirection/alignDivisor + separation/seperationDivisor;
+        add += center / cohesionDivisor + crowdDirection / alignDivisor + separation / seperationDivisor;
         return add;
     }
 
@@ -150,7 +176,7 @@ public class Boid : MonoBehaviour {
 
     public void LimitVelocity()
     {
-        if(rb.velocity.sqrMagnitude > 10)
+        if (rb.velocity.sqrMagnitude > 10)
         {
             rb.velocity = rb.velocity.normalized * 10.0f;
         }
@@ -163,24 +189,24 @@ public class Boid : MonoBehaviour {
         navmesh.ResetTarget();
         MoveToWaypoint();
     }
-    
+
     // Find the closest entrance via Euclidian distance
     public void MoveToWaypoint()
     {
         List<Waypoint> actives = new List<Waypoint>();
-        foreach(Waypoint w in entrances)
+        foreach (Waypoint w in entrances)
         {
-            if (w.isActive)
+            if (w.isActive && w != lastWaypoint && w != currentWaypoint)
                 actives.Add(w);
         }
 
         Waypoint closest = null;
         float closestDist = float.MaxValue;
         float temp;
-        foreach(Waypoint w in actives)
+        foreach (Waypoint w in actives)
         {
             temp = Vector3.Distance(w.transform.position, rb.position);
-            
+
             if (temp < closestDist)
             {
                 closest = w;
@@ -189,16 +215,49 @@ public class Boid : MonoBehaviour {
         }
 
         navmesh.SetStoppingDistance(1.0f);
+        lastWaypoint = currentWaypoint;
+        currentWaypoint = closest;
         NavToTarget(closest.transform.position);
+    }
+
+    public void MoveToPlayer()
+    {
+        List<PlayerScript> actives = new List<PlayerScript>();
+        foreach (PlayerScript ps in players)
+        {
+            actives.Add(ps);
+        }
+
+        PlayerScript closest = null;
+        float closestDist = float.MaxValue;
+        float temp;
+        foreach (PlayerScript ps in actives)
+        {
+            temp = Vector3.Distance(ps.transform.position, rb.position);
+
+            if (temp < closestDist)
+            {
+                closest = ps;
+                closestDist = temp;
+            }
+        }
+
+        navmesh.SetStoppingDistance(1.0f);
+
+
+        // find the leader script in player
+        Leader l = closest.gameObject.GetComponent<Leader>();
+        this.leader = l;
+        l.followers.Add(this);
     }
 
     public void OnTriggerEnter(Collider c)
     {
-        if(c.gameObject == this.gameObject || c.isTrigger)
+        if (c.gameObject == this.gameObject || c.isTrigger)
             return;
 
         Boid b = c.gameObject.GetComponentInChildren<Boid>();
-        if(b != null)
+        if (b != null)
         {
             nearby.Add(b);
         }
@@ -216,5 +275,5 @@ public class Boid : MonoBehaviour {
             nearby.Remove(b);
         }
     }
-    
+
 }

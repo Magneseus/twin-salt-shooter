@@ -2,24 +2,27 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Leader : MonoBehaviour {
+public class Leader : MonoBehaviour
+{
 
-    private List<Boid> followers;
+    public List<Boid> followers;
     private bool leading = true;
 
-	// Use this for initialization
-	void Start () {
+    // Use this for initialization
+    void Start()
+    {
         followers = new List<Boid>();
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+
+    }
 
     public void ToggleLead()
     {
-        if(leading)
+        if (leading)
         {
             StopLeading();
         }
@@ -43,14 +46,14 @@ public class Leader : MonoBehaviour {
 
     public void StopLeading()
     {
-        foreach(Boid b in followers)
+        foreach (Boid b in followers)
         {
             b.LoseLeader();
         }
 
         leading = false;
         Collider[] c = gameObject.GetComponents<Collider>();
-        foreach(Collider c1 in c)
+        foreach (Collider c1 in c)
         {
             if (c1.isTrigger)
                 c1.enabled = false;
