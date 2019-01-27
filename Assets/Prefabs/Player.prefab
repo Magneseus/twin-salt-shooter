@@ -389,8 +389,8 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1898142682394170}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 3.14, y: -1.08, z: 3.72}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalPosition: {x: 0.24, y: 1.65, z: -12.1}
+  m_LocalScale: {x: 2.2347884, y: 2.2347884, z: 2.2347884}
   m_Children:
   - {fileID: 4550061809466146}
   m_Father: {fileID: 0}
@@ -1050,7 +1050,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eee0fdb9fd41ff143afe061fa2063ad2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerId: 0
+  playerId: 1
   interactButton: X Button
   playerObject: {fileID: 1125341533938514}
   handObject: {fileID: 1087532559377600}
