@@ -7,6 +7,8 @@ public class PlayerScript : MonoBehaviour
 {
     public int playerId = 0;
     public string interactButton = "X Button";
+    public GameObject playerObject;
+    public GameObject handObject;
 
     private Dictionary<string, PlayerUsable> actionMap;
     private List<PlayerInteractable> interactables;
@@ -57,6 +59,15 @@ public class PlayerScript : MonoBehaviour
     {
         if (inputBlocked)
             return;
+
+        if(rePlayer.GetAxis("LStick Horizontal") != 0)
+        {
+            float newY = Mathf.Sin(Time.time*10)/10;
+            playerObject.transform.localPosition = new Vector3(playerObject.transform.localPosition.x, newY, playerObject.transform.localPosition.z);
+            float newX = Mathf.Sin(Time.time * 10) / 400;
+            handObject.transform.localPosition = new Vector3(newX, handObject.transform.localPosition.y, handObject.transform.localPosition.z);
+
+        }
 
         // Activate all actions if they exist
         foreach (KeyValuePair<string, PlayerUsable> action in actionMap)

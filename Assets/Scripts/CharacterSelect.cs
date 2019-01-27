@@ -51,7 +51,7 @@ public class CharacterSelect : MonoBehaviour {
         {
             currentColor[i] = i;
             currentHat[i] = i;
-            guysMat[i] = guys[i].GetComponent<Renderer>().materials[0];
+            guysMat[i] = guys[i].GetComponent<Renderer>().material;
             guysMat[i].color = colors[currentColor[i]];
 
             currentHatObject[i] = Instantiate(hats[i], hatPos[i].transform.position, Quaternion.identity, hatPos[i].transform);
