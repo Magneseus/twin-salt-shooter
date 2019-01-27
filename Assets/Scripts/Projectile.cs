@@ -14,7 +14,7 @@ public class Projectile : MonoBehaviour {
     public float speed;
     private int playerThatFiredMe;
     public float rotationOffset;
-
+    
 	// Use this for initialization
 	void Start () {
         currentLife = 0;

@@ -5,6 +5,10 @@ using Rewired;
 
 public class PlayerScript : MonoBehaviour
 {
+
+    public AudioSource gunAudio;
+    public AudioSource crossbowAudio;
+    public AudioSource throwerAudio;
     public int playerId = 0;
     public string interactButton = "X Button";
     public GameObject playerObject;
