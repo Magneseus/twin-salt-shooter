@@ -21,12 +21,10 @@ public class Leader : MonoBehaviour {
     {
         if(leading)
         {
-            Debug.Log("STOPPING");
             StopLeading();
         }
         else
         {
-            Debug.Log("STARTING");
             StartLeading();
         }
     }

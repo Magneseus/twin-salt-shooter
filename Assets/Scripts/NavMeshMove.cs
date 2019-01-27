@@ -10,18 +10,22 @@ public class NavMeshMove : MonoBehaviour
     private Vector3 targetLocation;
     private NavMeshPath targetPath;
 
-    private void Start()
+    private void Awake()
     {
         agent = GetComponent<NavMeshAgent>();
         agent.updatePosition = false;
         agent.stoppingDistance = 3.0f;
     }
 
+    private void Start()
+    {
+        
+    }
+
     public void SetStoppingDistance(float newDist)
     {
         agent.stoppingDistance = newDist;
     }
-
 
     // Set nav target, generates a path
     // Returns true on valid path, false otherwise
@@ -56,7 +60,7 @@ public class NavMeshMove : MonoBehaviour
     // Get direction to aim in
     public Vector3 GetMoveDirection()
     {
-        return agent.steeringTarget;
+        return agent.steeringTarget - transform.position;
     }
 
     // Update NavMesh with new position
@@ -68,6 +72,8 @@ public class NavMeshMove : MonoBehaviour
     // Did we reach our target
     public bool TargetReached()
     {
+        if (IsStopped())
+            return true; 
         return agent.remainingDistance <= agent.stoppingDistance;
     }
 

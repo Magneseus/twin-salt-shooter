@@ -10,19 +10,22 @@ public class Boid : MonoBehaviour {
     public float cohesionDivisor = 25.0f;
     public float alignDivisor = 8.0f;
     public float seperationDivisor = 8.0f;
+    private NavMeshMove navmesh;
 
     public Leader leader;
+    public Vector3 destination;
     private Rigidbody rb;
-
-    public bool selected = false;
+    private bool toWaypoint = false;
 
     void Awake()
     {
         nearby = new List<Boid>();
+        
     }
 
 	// Use this for initialization
 	void Start () {
+        navmesh = GetComponent<NavMeshMove>();
         boid_radius = 1;
         SphereCollider[] sc = GetComponentsInChildren<SphereCollider>();
         foreach(SphereCollider sc1 in sc)
@@ -34,20 +37,27 @@ public class Boid : MonoBehaviour {
         }
 
         rb = GetComponent<Rigidbody>();
+        rb.velocity = new Vector3(0, 0, 0);
+        
+        navmesh.SetTarget(destination);
     }
 	
-	// Update is called once per frame
-	void Update () {
+	void FixedUpdate () {
 
 		if(move)
         {
             rb.velocity = new Vector3(10, 0, 0);
             move = false;
         }
+        Vector3 temp = GetVelocity();
+        rb.velocity += temp;
 
-        rb.velocity += GetVelocity();
         LimitVelocity();
         gameObject.transform.LookAt(rb.velocity + gameObject.transform.position);
+        if (leader != null)
+            NavToTarget(leader.transform.position);
+
+        navmesh.UpdatePosition(transform.position);
 	}
 
     private Vector3 GetVelocity()
@@ -55,6 +65,7 @@ public class Boid : MonoBehaviour {
         Vector3 crowdDirection = new Vector3(0, 0, 0);
         Vector3 center = new Vector3(0, 0, 0);
         Vector3 separation = new Vector3(0, 0, 0);
+        Vector3 target = new Vector3(0, 0, 0);
         float dist;
         Vector3 away;
         Rigidbody b_rb;
@@ -79,21 +90,36 @@ public class Boid : MonoBehaviour {
 
         if (leader != null)
         {
-            if (Vector3.Distance(rb.position, leader.gameObject.transform.position) > 1)
+            if (Vector3.Distance(rb.position, leader.gameObject.transform.position) < 10)
             {
-                return GoToTarget(rb.position, leader.gameObject.transform.position) + separation / 4.0f;
+                //return GoToTarget(rb.position, leader.gameObject.transform.position) + separation / 4.0f;
+            }
+        }
+        
+        if(nearby.Count > 0)
+            center = (center / nearby.Count) - rb.position;
+
+        Vector3 add = new Vector3(0, 0, 0);
+        if(!navmesh.TargetReached())
+        {
+            target = navmesh.GetMoveDirection();
+            add = target.normalized;
+            return add + separation / 16.0f;
+        }
+        else // we reached target
+        {
+            if(toWaypoint)
+            {
+                navmesh.ResetTarget();
+                if(leader == null)
+                    rb.velocity = new Vector3(0, 0, 0);
+                toWaypoint = false;
+                return new Vector3(0, 0, 0);
             }
         }
 
-        center = (center / nearby.Count) - rb.position;
-        Vector3 add = center/cohesionDivisor + crowdDirection/alignDivisor + separation/seperationDivisor;
-
-        if ((rb.velocity + add).sqrMagnitude < 4)
-        {
-            return add;
-        }
-
-        return new Vector3(0, 0, 0);
+        add += center / cohesionDivisor + crowdDirection/alignDivisor + separation/seperationDivisor;
+        return add;
     }
 
     public Vector3 GoToTarget(Vector3 loc, Vector3 targ)
@@ -102,9 +128,15 @@ public class Boid : MonoBehaviour {
 
         towards = targ - loc;
         float dist = Vector3.Distance(targ, loc);
-        towards = towards.normalized * (Mathf.Pow(dist - 10, 2) / 5);
+        towards = towards.normalized * (dist);
 
         return towards;
+    }
+
+    public void NavToTarget(Vector3 targ)
+    {
+        navmesh.SetTarget(targ);
+        toWaypoint = true;
     }
 
     public void LimitVelocity()
@@ -119,6 +151,7 @@ public class Boid : MonoBehaviour {
     {
         leader = null;
         rb.velocity = new Vector3(0, 0, 0);
+        navmesh.ResetTarget();
     }
 
     public void OnTriggerEnter(Collider c)
