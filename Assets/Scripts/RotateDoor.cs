@@ -12,7 +12,7 @@ public class RotateDoor : PlayerInteractable {
     private float startTime;
     private Quaternion startRot;
     private Quaternion endRot;
-    public Slider slide;
+    //public Slider slide;
 
     private void Start()
     {
@@ -29,7 +29,7 @@ public class RotateDoor : PlayerInteractable {
 
     private void Update()
     {
-        slide.value = PercentComplete / 100;
+        //slide.value = PercentComplete / 100;
         base.Update();
         if (rotating)
         {

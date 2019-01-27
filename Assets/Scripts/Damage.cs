@@ -23,7 +23,26 @@ public class Damage : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        Collider[] hitColliders = Physics.OverlapSphere(transform.position, 1.8f);
+        if (hitColliders.Length > 0)
+        {
+            for (int i = 0; i < hitColliders.Length; i++)
+            {
+                if (hitColliders[i].gameObject.tag == "Player")
+                {
+                    print(hitColliders[i].name + "trig");
+                    Health h = hitColliders[i].gameObject.GetComponent<Health>();
+
+                    h.DealDamage(damagePerTick);
+                    Destroy(gameObject);
+                    /*if (h)
+                    {
+                        damageTarget = h;
+                    }*/
+                }
+            }
+        }
+
         if (damageTarget)
         {
             if ((damageTarget.gameObject.tag == "Enemy" && transform.tag == "PlayerDamage") || (transform.tag == "Enemy" && damageTarget.gameObject.tag == "Player"))
@@ -47,16 +66,30 @@ public class Damage : MonoBehaviour
                 }
             }
         }
-	}
+}
 
     private void OnCollisionEnter(Collision collision)
     {
-        print(collision.transform.name);
-        Health h = collision.gameObject.GetComponent<Health>();
-        if (h != null)
+        print("whyyy");
+        if (this.gameObject.tag == "Enemy" && collision.gameObject.tag == "Player")
         {
-            damageTarget = h;
+            print("hit player");
+            Health h = collision.gameObject.GetComponent<Health>();
+            if (h != null)
+            {
+                damageTarget = h;
+            }
         }
+        else
+        {
+            print(collision.transform.name);
+            Health h = collision.gameObject.GetComponent<Health>();
+            if (h != null)
+            {
+                damageTarget = h;
+            }
+        }
+        
     }
 
     private void OnTriggerEnter(Collider collision)
@@ -70,5 +103,6 @@ public class Damage : MonoBehaviour
                 damageTarget = h;
             }
         }
+       
     }
 }
