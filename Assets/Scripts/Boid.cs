@@ -7,21 +7,29 @@ public class Boid : MonoBehaviour {
     private float boid_radius;
     public float weight = 1.0f;
     public bool move = false;
-    public float cohesionDivisor = 25;
-    public float alignDivisor = 8;
-    public float seperationDivisor = 8;
+    public float cohesionDivisor = 25.0f;
+    public float alignDivisor = 8.0f;
+    public float seperationDivisor = 8.0f;
 
     private Rigidbody rb;
 
+    public bool selected = false;
+
+    void Awake()
+    {
+        nearby = new List<Boid>();
+    }
+
 	// Use this for initialization
 	void Start () {
-        nearby = new List<Boid>();
-
         boid_radius = 1;
-        SphereCollider sc = GetComponent<SphereCollider>();
-        if(sc != null)
+        SphereCollider[] sc = GetComponentsInChildren<SphereCollider>();
+        foreach(SphereCollider sc1 in sc)
         {
-            boid_radius = sc.radius;
+            if(sc1.isTrigger)
+            {
+                boid_radius = sc1.radius;
+            }
         }
 
         rb = GetComponent<Rigidbody>();
@@ -29,12 +37,15 @@ public class Boid : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+
 		if(move)
         {
-            //rb.velocity = new Vector3(5, 0, 0);
+            rb.velocity = new Vector3(10, 0, 0);
             move = false;
         }
+
         rb.velocity += GetVelocity();
+        gameObject.transform.LookAt(rb.velocity + gameObject.transform.position);
 	}
 
     private Vector3 GetVelocity()
@@ -48,7 +59,7 @@ public class Boid : MonoBehaviour {
         foreach (Boid b in nearby)
         {
             b_rb = b.GetComponent<Rigidbody>();
-            
+
             // converge
             center += b_rb.position * b.weight;
 
@@ -75,6 +86,17 @@ public class Boid : MonoBehaviour {
         return new Vector3(0, 0, 0);
     }
 
+    public Vector3 GoToTarget(Vector3 loc, Vector3 targ)
+    {
+        Vector3 towards = new Vector3();
+
+        towards = targ - loc;
+        float dist = Vector3.Distance(targ, loc);
+        towards = towards.normalized * ((boid_radius / 2) - dist);
+
+        return towards;
+    }
+
     public void OnTriggerEnter(Collider c)
     {
         if(c.gameObject == this.gameObject || c.isTrigger)
@@ -84,8 +106,6 @@ public class Boid : MonoBehaviour {
         if(b != null)
         {
             nearby.Add(b);
-
-            Debug.Log("Added boid of " + c + " to " + this);
         }
 
     }
@@ -99,7 +119,7 @@ public class Boid : MonoBehaviour {
         if (b != null)
         {
             nearby.Remove(b);
-            Debug.Log("Removed boid! " + nearby.Count + " elements left.");
         }
     }
+    
 }

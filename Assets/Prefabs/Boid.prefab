@@ -23,9 +23,9 @@ GameObject:
   - component: {fileID: 135243173983382328}
   - component: {fileID: 54157505407654118}
   - component: {fileID: 135034702351224918}
-  m_Layer: 0
+  m_Layer: 13
   m_Name: Boid
-  m_TagString: Untagged
+  m_TagString: Ghost
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -40,7 +40,7 @@ GameObject:
   - component: {fileID: 4468084748663572}
   - component: {fileID: 33495403915288522}
   - component: {fileID: 23845971908704490}
-  m_Layer: 0
+  m_Layer: 13
   m_Name: Sphere
   m_TagString: Untagged
   m_Icon: {fileID: 0}
