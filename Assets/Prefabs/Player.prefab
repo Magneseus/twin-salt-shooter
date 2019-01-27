@@ -813,10 +813,9 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children:
-  - {fileID: 4570044654129506}
+  m_Children: []
   m_Father: {fileID: 4365382763113366}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4140028585575254
 Transform:
@@ -931,6 +930,7 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
+  - {fileID: 4570044654129506}
   - {fileID: 4136147138256532}
   m_Father: {fileID: 4071434363629984}
   m_RootOrder: 1
@@ -1099,9 +1099,9 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1116607026904164}
-  m_LocalRotation: {x: 0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0, y: 0, z: 0.93}
-  m_LocalScale: {x: 30, y: 30, z: 30}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0.93000096}
+  m_LocalScale: {x: 30.000013, y: 30, z: 30.000013}
   m_Children:
   - {fileID: 4420530696185076}
   - {fileID: 4451425807775454}
@@ -1117,7 +1117,7 @@ Transform:
   - {fileID: 4961433342912998}
   - {fileID: 4470876892538504}
   - {fileID: 4742001412588586}
-  m_Father: {fileID: 4136147138256532}
+  m_Father: {fileID: 4365382763113366}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4577902886481350
@@ -3032,6 +3032,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   useLocation: {fileID: 0}
   bullet: {fileID: 1253809631691236, guid: 3641350ffc0e21a45bcca346ed54d337, type: 2}
+  bolt: {fileID: 1437522614545440, guid: b8d89a0205a741e41a1ea1d58f926b07, type: 2}
   cooldownMaxTime: 0.3
 --- !u!114 &114722616847836516
 MonoBehaviour:
@@ -3050,6 +3051,7 @@ MonoBehaviour:
   handObject: {fileID: 1087532559377600}
   gun: {fileID: 1174618900888918}
   crossbowObj: {fileID: 1656224482834962}
+  throwerObj: {fileID: 1116607026904164}
   ObjectThatNeedsToChangeColor: {fileID: 23120851782988706}
   hatPosition: {fileID: 1553360216963114}
   currentWeapon: 0
