@@ -17,10 +17,12 @@ public class Boid : MonoBehaviour {
     private Rigidbody rb;
     private bool toWaypoint = false;
 
+    private List<Waypoint> entrances;
+
     void Awake()
     {
         nearby = new List<Boid>();
-        
+        entrances = new List<Waypoint>();
     }
 
 	// Use this for initialization
@@ -39,14 +41,20 @@ public class Boid : MonoBehaviour {
         rb = GetComponent<Rigidbody>();
         rb.velocity = new Vector3(0, 0, 0);
         
-        navmesh.SetTarget(destination);
+        //navmesh.SetTarget(destination);
+
+        GameObject[] go = GameObject.FindGameObjectsWithTag("Waypoint");
+        foreach(GameObject _go in go)
+        {
+            entrances.Add(_go.GetComponentInChildren<Waypoint>());
+        }
     }
 	
 	void FixedUpdate () {
 
 		if(move)
         {
-            rb.velocity = new Vector3(10, 0, 0);
+            MoveToWaypoint();
             move = false;
         }
         Vector3 temp = GetVelocity();
@@ -135,6 +143,7 @@ public class Boid : MonoBehaviour {
 
     public void NavToTarget(Vector3 targ)
     {
+        navmesh.ResetTarget();
         navmesh.SetTarget(targ);
         toWaypoint = true;
     }
@@ -152,6 +161,35 @@ public class Boid : MonoBehaviour {
         leader = null;
         rb.velocity = new Vector3(0, 0, 0);
         navmesh.ResetTarget();
+        MoveToWaypoint();
+    }
+    
+    // Find the closest entrance via Euclidian distance
+    public void MoveToWaypoint()
+    {
+        List<Waypoint> actives = new List<Waypoint>();
+        foreach(Waypoint w in entrances)
+        {
+            if (w.isActive)
+                actives.Add(w);
+        }
+
+        Waypoint closest = null;
+        float closestDist = float.MaxValue;
+        float temp;
+        foreach(Waypoint w in actives)
+        {
+            temp = Vector3.Distance(w.transform.position, rb.position);
+            
+            if (temp < closestDist)
+            {
+                closest = w;
+                closestDist = temp;
+            }
+        }
+
+        navmesh.SetStoppingDistance(1.0f);
+        NavToTarget(closest.transform.position);
     }
 
     public void OnTriggerEnter(Collider c)
