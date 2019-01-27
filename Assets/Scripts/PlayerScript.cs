@@ -20,8 +20,8 @@ public class PlayerScript : MonoBehaviour
     private DualStickMovement movement;
 
 
-	// Use this for initialization
-	void Start ()
+    // Use this for initialization
+    void Start()
     {
         actionMap = new Dictionary<string, PlayerUsable>();
         interactables = new List<PlayerInteractable>();
@@ -32,21 +32,17 @@ public class PlayerScript : MonoBehaviour
 
         // ADD CONTROLS HERE
         actionMap.Add("RBumper", GetComponent<Fire_Projectile>());
-        
 
         // Assign Use Locations if they exist
         foreach (KeyValuePair<string, PlayerUsable> action in actionMap)
         {
-            for (int i = 0; i < transform.childCount; i++)
+            GameObject go;
+            if (FindChildWithName(transform, action.Key, out go))
             {
-                Transform t = transform.GetChild(i);
-                if (t.gameObject.name == "UseLocation" + action.Key)
-                {
-                    action.Value.useLocation = t.gameObject;
-                }
+                action.Value.useLocation = go;
             }
         }
-	}
+    }
 	
 	// Update is called once per frame
 	void Update ()
@@ -143,5 +139,29 @@ public class PlayerScript : MonoBehaviour
             movement.disableMovement = false;
             inputBlocked = false;
         }
+    }
+
+    private bool FindChildWithName(Transform t, string action, out GameObject go)
+    {
+        go = null;
+        
+        for (int i = 0; i < t.childCount; i++)
+        {
+            Transform __t = t.GetChild(i);
+            if (__t.gameObject.name == "UseLocation" + action)
+            {
+                go = __t.gameObject;
+                return true;
+            }
+            else
+            {
+                if (FindChildWithName(__t, action, out go))
+                {
+                    return true;
+                }
+            }
+        }
+
+        return false;
     }
 }
