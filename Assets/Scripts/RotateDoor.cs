@@ -12,12 +12,14 @@ public class RotateDoor : PlayerInteractable {
     private float startTime;
     private Quaternion startRot;
     private Quaternion endRot;
-    //public Slider slide;
+    //public Slidersy slide;
+    public ParticleSystem ps;
 
     private void Start()
     {
         endRot = Quaternion.identity;
         endRot.SetFromToRotation(new Vector3(0, 0, 0), new Vector3(0, RotateAmount, 0));
+        ps.Stop();
     }
 
     public override void OnComplete()
@@ -33,6 +35,7 @@ public class RotateDoor : PlayerInteractable {
         base.Update();
         if (rotating)
         {
+            ps.Stop();
             transform.rotation = Quaternion.Slerp(
                 startRot,
                 endRot,
@@ -40,7 +43,29 @@ public class RotateDoor : PlayerInteractable {
         }
     }
 
+    public override void Interact(GameObject interactor)
+    {
+        if (interactor.tag == "Player")
+        {
+            if (!IsInteracting)
+                ps.Play();
 
+            IsInteracting = true;
+        }
+        
+    }
+
+    public override void StopInteract(GameObject interactor)
+    {
+        if (interactor.tag == "Player")
+        {
+            if (IsInteracting)
+                ps.Stop();
+            
+            IsInteracting = false;
+        }
+        
+    }
     public void SetSlider(float newVal)
     {
     }

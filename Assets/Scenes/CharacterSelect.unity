@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44657874, g: 0.49641258, b: 0.5748172, a: 1}
+  m_IndirectSpecularColor: {r: 0.3731193, g: 0.38073996, b: 0.35872698, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -4998,7 +4998,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 174, y: 193}
+  m_AnchoredPosition: {x: 305, y: 193}
   m_SizeDelta: {x: 1506, y: 145}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &177048151
@@ -10081,6 +10081,10 @@ Prefab:
       propertyPath: m_LocalEulerAnglesHint.y
       value: 180
       objectReference: {fileID: 0}
+    - target: {fileID: 2300002, guid: da1d8b917ea767549910929e0dd6c897, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 8909c46f4d952d44eb60a8a9b704e50e, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: da1d8b917ea767549910929e0dd6c897, type: 3}
   m_IsPrefabAsset: 0
@@ -24502,7 +24506,7 @@ RectTransform:
   m_GameObject: {fileID: 1079647632}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.65272, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1314536441}
   m_RootOrder: 0
@@ -29280,6 +29284,11 @@ Prefab:
       propertyPath: m_LocalScale.z
       value: 80.97183
       objectReference: {fileID: 0}
+    - target: {fileID: 23614999782578158, guid: 3bd6cb0981099e24290facae1debaba4,
+        type: 2}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 7c820a45c595adc449aa2e3f16001c9e, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3bd6cb0981099e24290facae1debaba4, type: 2}
   m_IsPrefabAsset: 0
@@ -44265,6 +44274,10 @@ Prefab:
       propertyPath: m_Name
       value: pictureframe (2)
       objectReference: {fileID: 0}
+    - target: {fileID: 2300002, guid: da1d8b917ea767549910929e0dd6c897, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: b9befe9dd8572e246b3b725147614af1, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: da1d8b917ea767549910929e0dd6c897, type: 3}
   m_IsPrefabAsset: 0
@@ -44320,7 +44333,7 @@ Camera:
     height: 1
   near clip plane: 0.3
   far clip plane: 1000
-  field of view: 23
+  field of view: 27
   orthographic: 0
   orthographic size: 5
   m_Depth: -1
