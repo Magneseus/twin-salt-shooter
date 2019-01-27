@@ -9,6 +9,9 @@ public class PlayerScript : MonoBehaviour
     public string interactButton = "X Button";
     public GameObject playerObject;
     public GameObject handObject;
+    public GameObject gun;
+    public GameObject crossbowObj;
+    public GameObject throwerObj;
     private Color playerColor;
     public Renderer ObjectThatNeedsToChangeColor;
     public GameObject hatPosition;
@@ -23,8 +26,8 @@ public class PlayerScript : MonoBehaviour
     private Rewired.Player rePlayer;
     private CharacterController cc;
     private DualStickMovement movement;
-    private enum Weapon { pistol, flameThrower, crossbow, };
-    private Weapon currentWeapon;
+    public enum Weapon { pistol, flameThrower, crossbow};
+    public Weapon currentWeapon;
 
     // Use this for initialization
     void Start()
@@ -69,7 +72,36 @@ public class PlayerScript : MonoBehaviour
     {
         DoInput();
         DoInteractables();
-	}
+        if(currentWeapon == Weapon.pistol)
+        {
+            gun.SetActive(true);
+            crossbowObj.SetActive(false);
+            throwerObj.SetActive(false);
+            
+            actionMap.Remove("RBumper");
+            actionMap.Add("RBumper", GetComponent<Fire_Projectile>());
+        }
+        else if(currentWeapon == Weapon.crossbow)
+        {
+            crossbowObj.SetActive(true);
+            throwerObj.SetActive(false);
+
+            gun.SetActive(false);
+            actionMap.Remove("RBumper");
+            actionMap.Add("RBumper", GetComponent<Fire_Projectile>());
+
+        }
+        else
+        {
+            crossbowObj.SetActive(false);
+            throwerObj.SetActive(true);
+
+            gun.SetActive(false);
+            actionMap.Remove("RBumper");
+            actionMap.Add("RBumper", GetComponent<FlameThrower>());
+
+        }
+    }
 
     private void FixedUpdate()
     {
@@ -215,4 +247,35 @@ public class PlayerScript : MonoBehaviour
         hat.transform.localScale = new Vector3(1 / transform.localScale.x, 1 / transform.localScale.y, 1 / transform.localScale.z);
     }
     
+    public void ChangeWeapons(string type)
+    {
+        if(type == "pistol")
+        {
+            currentWeapon = Weapon.pistol;
+        }else if(type == "flameThrower")
+        {
+            currentWeapon = Weapon.flameThrower;
+        }
+        else if (type == "crossbow")
+        {
+            currentWeapon = Weapon.crossbow;
+        }
+    }
+
+    public string GetWeapon()
+    {
+        if (currentWeapon == Weapon.pistol)
+        {
+            return "pistol";
+        }
+        else if (currentWeapon == Weapon.crossbow)
+        {
+            return "crossbow";
+        }
+        else
+        {
+            return "flameThrower";
+        }
+    }
+
 }

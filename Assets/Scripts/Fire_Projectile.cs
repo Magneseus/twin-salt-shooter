@@ -5,6 +5,8 @@ using UnityEngine;
 public class Fire_Projectile : PlayerUsable {
 
     public GameObject bullet;
+    public GameObject bolt;
+    private GameObject current;
 
     private PlayerScript player;
 
@@ -22,11 +24,21 @@ public class Fire_Projectile : PlayerUsable {
     {
         countdownCurrent += Time.deltaTime;
 
+
+        if(player.GetWeapon() == "pistol")
+        {
+            current = bullet;
+        }
+        else
+        {
+            current = bolt;
+        }
+
         if (countdownCurrent > cooldownMaxTime)
         {
             countdownCurrent = 0;
             GameObject newBullet;
-            newBullet = Instantiate(bullet, useLocation.transform.position, player.transform.rotation);
+            newBullet = Instantiate(current, useLocation.transform.position, player.transform.rotation);
             newBullet.transform.rotation = player.transform.rotation;
             newBullet.GetComponent<Projectile>().SetPlayerNumber(player.playerId);
         }
