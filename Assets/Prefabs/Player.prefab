@@ -1050,7 +1050,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eee0fdb9fd41ff143afe061fa2063ad2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerId: 1
+  playerId: 0
   interactButton: X Button
   playerObject: {fileID: 1125341533938514}
   handObject: {fileID: 1087532559377600}
