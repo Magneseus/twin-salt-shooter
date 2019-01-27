@@ -28,7 +28,7 @@ public class Damage : MonoBehaviour
         {
             for (int i = 0; i < hitColliders.Length; i++)
             {
-                if (hitColliders[i].gameObject.tag == "Player")
+                if (hitColliders[i].gameObject.tag == "Player" && this.gameObject.tag == "Enemy")
                 {
                     print(hitColliders[i].name + "trig");
                     Health h = hitColliders[i].gameObject.GetComponent<Health>();
