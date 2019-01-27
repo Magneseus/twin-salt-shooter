@@ -11,12 +11,17 @@ public class Barricade : PlayerInteractable
     public float EnemySecondsToBreak;
     public float PlayerSecondsToBuild;
 
+    private ParticleSystem ps;
+
     private void Start()
     {
         if (IsBroken)
             SecondsToComplete = PlayerSecondsToBuild;
         else
             SecondsToComplete = EnemySecondsToBreak;
+
+        ps = GetComponentInChildren<ParticleSystem>();
+        ps.Stop();
     }
 
 
@@ -24,6 +29,9 @@ public class Barricade : PlayerInteractable
     {
         if (IsBroken && interactor.tag == "Player")
         {
+            if(!IsInteracting)
+                ps.Play();
+
             IsInteracting = true;
         }
 
@@ -37,6 +45,9 @@ public class Barricade : PlayerInteractable
     {
         if (IsBroken && interactor.tag == "Player")
         {
+            if (IsInteracting)
+                ps.Stop();
+
             IsInteracting = false;
         }
 
@@ -50,6 +61,7 @@ public class Barricade : PlayerInteractable
     {
         if (IsBroken)
         {
+            ps.Stop();
             barricadeObj.SetActive(true);
             barricadePhysical.GetComponent<BoxCollider>().enabled = true;
 
