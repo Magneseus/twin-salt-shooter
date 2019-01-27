@@ -25,6 +25,7 @@ public class DualStickMovement : MonoBehaviour
     // Use this for initialization
     void Start ()
     {
+        playerId = GetComponent<PlayerScript>().playerId;
         rePlayer = ReInput.players.GetPlayer(playerId);
         cc = GetComponent<CharacterController>();
         moveDirectionOffset = Camera.main.transform.rotation.eulerAngles.y;
