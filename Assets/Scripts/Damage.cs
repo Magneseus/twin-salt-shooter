@@ -32,8 +32,8 @@ public class Damage : MonoBehaviour
                 {
                     damageTarget = null;
 
-                    if (OnDamageFinished != null)
-                        OnDamageFinished();
+                    if (OnDamageFinishedCallback != null)
+                        OnDamageFinishedCallback();
                 }
 
                 if (damageTarget)

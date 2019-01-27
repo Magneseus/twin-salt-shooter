@@ -38,11 +38,11 @@ public class Projectile : MonoBehaviour {
         playerThatFiredMe = num;
     }
 
-    void OnTriggerEnter(Collider col)
+    private void OnCollisionEnter(Collision collision)
     {
-        if (col.tag == "Enemy")
+        if (collision.gameObject.tag == "structural")
         {
-            //TODO deal damage
+            Destroy(gameObject);
         }
     }
 }
