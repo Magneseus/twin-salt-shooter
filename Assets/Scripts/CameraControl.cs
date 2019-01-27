@@ -6,7 +6,7 @@ public class CameraControl : MonoBehaviour
 {
     public float m_DampTime = 0.2f;                 // Approximate time for the camera to refocus.
     public float m_ScreenEdgeBuffer = 4f;           // Space between the top/bottom most target and the screen edge.
-    public float m_MinSize = 8f;                    // The smallest orthographic size the camera can be.
+    public float m_MinSize = 12f;                    // The smallest orthographic size the camera can be.
     //public GameObject[] m_Targets = new GameObject[4];                  // All the targets the camera needs to encompass.
     List<GameObject> m_Targets = new List<GameObject>();
 
@@ -63,7 +63,7 @@ public class CameraControl : MonoBehaviour
     private void FindAveragePosition()
     {
         Vector3 averagePos = new Vector3();
-        int numTargets = 1;
+        int numTargets = 0;
         // Go through all the targets and add their positions together.
         for (int i = 0; i < m_Targets.Count; i++)
         {
