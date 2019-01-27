@@ -11,4 +11,14 @@ public class PlayerUsable : MonoBehaviour
     {
 
     }
+
+    public virtual void UnUse()
+    {
+
+    }
+
+    public virtual void UseOnce()
+    {
+
+    }
 }

@@ -28,7 +28,7 @@ public class Damage : MonoBehaviour
             timeCounter += Time.deltaTime;
             while (timeCounter >= secsPerTick)
             {
-                if (ticksOfDamage >= numTicks)
+                if (numTicks > 0 && ticksOfDamage >= numTicks)
                 {
                     damageTarget = null;
 

@@ -23,11 +23,13 @@ public class PlayerScript : MonoBehaviour
     private Rewired.Player rePlayer;
     private CharacterController cc;
     private DualStickMovement movement;
-
+    private enum Weapon { pistol, flameThrower, crossbow, };
+    private Weapon currentWeapon;
 
     // Use this for initialization
     void Start()
     {
+        currentWeapon = Weapon.pistol;
         actionMap = new Dictionary<string, PlayerUsable>();
         interactables = new List<PlayerInteractable>();
         rePlayer = ReInput.players.GetPlayer(playerId);
@@ -37,7 +39,19 @@ public class PlayerScript : MonoBehaviour
         startingY = transform.position.y;
 
         // ADD CONTROLS HERE
-        actionMap.Add("RBumper", GetComponent<Fire_Projectile>());
+        if(currentWeapon == Weapon.pistol)
+        {
+            actionMap.Add("RBumper", GetComponent<FlameThrower>());//GetComponent<Fire_Projectile>());
+        }
+        else if (currentWeapon == Weapon.flameThrower)
+        {
+            actionMap.Add("RBumper", GetComponent<Fire_Projectile>());
+        }
+        else if (currentWeapon == Weapon.crossbow)
+        {
+            //actionMap.Add("RBumper", GetComponent<FlameThrower>());//GetComponent<Fire_Projectile>());
+        }
+            
 
         // Assign Use Locations if they exist
         foreach (KeyValuePair<string, PlayerUsable> action in actionMap)
@@ -82,6 +96,14 @@ public class PlayerScript : MonoBehaviour
             if (rePlayer.GetButton(action.Key))
             {
                 action.Value.Use();
+            }
+            else if (rePlayer.GetButtonUp(action.Key))
+            {
+                action.Value.UnUse();
+            }
+            else if (rePlayer.GetButtonDown(action.Key))
+            {
+                action.Value.UseOnce();
             }
         }
     }
@@ -192,4 +214,5 @@ public class PlayerScript : MonoBehaviour
         hat.transform.rotation = Quaternion.Euler(rot);
         hat.transform.localScale = new Vector3(1 / transform.localScale.x, 1 / transform.localScale.y, 1 / transform.localScale.z);
     }
+    
 }
