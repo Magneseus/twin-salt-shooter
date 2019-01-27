@@ -23,34 +23,52 @@ public class Damage : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        
         if (damageTarget)
         {
-            timeCounter += Time.deltaTime;
-            while (timeCounter >= secsPerTick)
+            if ((damageTarget.gameObject.tag == "Enemy" && transform.tag == "PlayerDamage") || (transform.tag == "Enemy" && damageTarget.gameObject.tag == "Player"))
             {
-                if (numTicks > 0 && ticksOfDamage >= numTicks)
+                timeCounter += Time.deltaTime;
+                while (timeCounter >= secsPerTick)
                 {
-                    damageTarget = null;
+                    if (numTicks > 0 && ticksOfDamage >= numTicks)
+                    {
+                        damageTarget = null;
 
-                    if (OnDamageFinishedCallback != null)
-                        OnDamageFinishedCallback();
+                        if (OnDamageFinishedCallback != null)
+                            OnDamageFinishedCallback();
+                    }
+
+                    if (damageTarget)
+                        damageTarget.DealDamage(damagePerTick);
+
+                    timeCounter -= secsPerTick;
+                    ticksOfDamage++;
                 }
-
-                if (damageTarget)
-                    damageTarget.DealDamage(damagePerTick);
-
-                timeCounter -= secsPerTick;
-                ticksOfDamage++;
             }
         }
 	}
 
     private void OnCollisionEnter(Collision collision)
     {
+        print(collision.transform.name);
         Health h = collision.gameObject.GetComponent<Health>();
-        if (h)
+        if (h != null)
         {
             damageTarget = h;
+        }
+    }
+
+    private void OnTriggerEnter(Collider collision)
+    {
+        if (this.gameObject.name == "DamageArea" && collision.gameObject.tag == "Enemy")
+        {
+            print(collision.name + "trig");
+            Health h = collision.gameObject.GetComponent<Health>();
+            if (h)
+            {
+                damageTarget = h;
+            }
         }
     }
 }

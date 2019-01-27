@@ -39,11 +39,11 @@ public class PlayerScript : MonoBehaviour
         startingY = transform.position.y;
 
         // ADD CONTROLS HERE
-        if(currentWeapon == Weapon.pistol)
+        if(currentWeapon == Weapon.flameThrower)
         {
             actionMap.Add("RBumper", GetComponent<FlameThrower>());//GetComponent<Fire_Projectile>());
         }
-        else if (currentWeapon == Weapon.flameThrower)
+        else if (currentWeapon == Weapon.pistol)
         {
             actionMap.Add("RBumper", GetComponent<Fire_Projectile>());
         }

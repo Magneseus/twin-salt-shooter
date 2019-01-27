@@ -19,17 +19,19 @@ public class Health : MonoBehaviour
     public void DealDamage(int damage)
     {
         curHealth -= damage;
-        
+        print(curHealth + " transform.name");
         if (curHealth <= 0)
         {
             curHealth = 0;
             if (OnDeathCallback != null)
                 OnDeathCallback();
+            Destroy(this.gameObject);
         }
     }
 
     public void SetOnDeathCallback(System.Action callback)
     {
+        
         OnDeathCallback = callback;
     }
     
