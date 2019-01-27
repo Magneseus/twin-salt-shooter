@@ -109,5 +109,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxLifeTime: 3
-  speed: 100
+  speed: 50
   rotationOffset: 2

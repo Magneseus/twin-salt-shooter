@@ -8,17 +8,27 @@ public class Fire_Projectile : PlayerUsable {
 
     private PlayerScript player;
 
+    public float cooldownMaxTime;
+    private float countdownCurrent;
+
 
     public void Start()
     {
+        countdownCurrent = 0;
         player = GetComponent<PlayerScript>();
     }
 
     public override void Use()
     {
-        GameObject newBullet;
-        newBullet = Instantiate(bullet, useLocation.transform.position, player.transform.rotation);
-        newBullet.transform.rotation = player.transform.rotation;
-        newBullet.GetComponent<Projectile>().SetPlayerNumber(player.playerId);
+        countdownCurrent += Time.deltaTime;
+
+        if (countdownCurrent > cooldownMaxTime)
+        {
+            countdownCurrent = 0;
+            GameObject newBullet;
+            newBullet = Instantiate(bullet, useLocation.transform.position, player.transform.rotation);
+            newBullet.transform.rotation = player.transform.rotation;
+            newBullet.GetComponent<Projectile>().SetPlayerNumber(player.playerId);
+        }
     }
 }
