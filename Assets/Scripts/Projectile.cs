@@ -4,7 +4,10 @@ using UnityEngine;
 
 public class Projectile : MonoBehaviour {
 
-
+    public bool isCross;
+    private Vector3 randRotate;
+    public GameObject childObj;
+    public float speedRot;
     public float maxLifeTime;
     private float currentLife;
     public float speed;
@@ -14,7 +17,7 @@ public class Projectile : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
         currentLife = 0;
-
+        randRotate = new Vector3(Random.Range(-speedRot, speedRot), Random.Range(-speedRot, speedRot), Random.Range(-speedRot, speedRot));
         transform.Rotate(new Vector3(Random.Range(-rotationOffset, rotationOffset), Random.Range(-rotationOffset, rotationOffset), Random.Range(-rotationOffset, rotationOffset)));
         Vector3 i_hate_rotations = transform.rotation.eulerAngles;
 
@@ -31,6 +34,13 @@ public class Projectile : MonoBehaviour {
         {
             Destroy(gameObject);
         }
+
+
+        if (isCross)
+        {
+            childObj.transform.localEulerAngles += randRotate;
+        }
+
 	}
 
     public void SetPlayerNumber(int num)
