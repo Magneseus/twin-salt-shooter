@@ -6,20 +6,28 @@ using Rewired;
 [RequireComponent(typeof(CharacterController))]
 public class DualStickMovement : MonoBehaviour
 {
-    public int playerId = 0;
+    public float moveSpeed = 10.0f;
     public bool applyLookRotationToTransform = true;
+
+    [HideInInspector]
+    public int playerId = 0;
+    [HideInInspector]
     public Vector3 lookRotation;
+    [HideInInspector]
     public Vector3 lookDirection;
+    [HideInInspector]
     public bool disableMovement = false;
 
     private Rewired.Player rePlayer;
     private CharacterController cc;
+    private float moveDirectionOffset;
 
     // Use this for initialization
     void Start ()
     {
         rePlayer = ReInput.players.GetPlayer(playerId);
         cc = GetComponent<CharacterController>();
+        moveDirectionOffset = Camera.main.transform.rotation.eulerAngles.y;
     }
 	
 	// Update is called once per frame
@@ -35,7 +43,9 @@ public class DualStickMovement : MonoBehaviour
             z = rePlayer.GetAxis("LStick Vertical")
         };
 
-        cc.Move(moveVec * 3.0f * Time.deltaTime);
+        moveVec = Quaternion.AngleAxis(moveDirectionOffset, Vector3.up) * moveVec;
+
+        cc.Move(moveVec * moveSpeed * Time.deltaTime);
 
 
         // Rotation
@@ -51,7 +61,7 @@ public class DualStickMovement : MonoBehaviour
         {
             // Convert look vector to an angle
             float __y = Vector2.SignedAngle((new Vector2(-0.5f, 0.5f)), lookVector);
-            __y += 45.0f;
+            __y += 45.0f + moveDirectionOffset;
 
             // Set public facing vars
             lookDirection = new Vector3 { x = lookVector.x, y = lookVector.y };
