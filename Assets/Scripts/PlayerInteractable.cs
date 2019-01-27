@@ -16,12 +16,12 @@ public class PlayerInteractable : MonoBehaviour
     protected bool IsInteracting = false;
     
 
-    public virtual void Interact()
+    public virtual void Interact(GameObject interactor)
     {
         IsInteracting = true;
     }
 
-    public virtual void StopInteract()
+    public virtual void StopInteract(GameObject interactor)
     {
         IsInteracting = false;
     }

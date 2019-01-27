@@ -96,7 +96,7 @@ public class PlayerScript : MonoBehaviour
             // If we're interacting, start the interact and check for blocking
             if (rePlayer.GetButton(interactButton))
             {
-                intScript.Interact();
+                intScript.Interact(this.gameObject);
 
                 if (intScript.IsBlocking)
                 {
@@ -107,7 +107,7 @@ public class PlayerScript : MonoBehaviour
             // If we're not, stop interact and stop blocking
             else
             {
-                intScript.StopInteract();
+                intScript.StopInteract(this.gameObject);
 
                 movement.disableMovement = false;
                 inputBlocked = false;
