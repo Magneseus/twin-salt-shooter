@@ -18,6 +18,7 @@ public class CharacterSelect : MonoBehaviour {
 
     private Material[] guysMat;
     private GameObject[] currentHatObject;
+    public GameObject valueStored;
 
     private int[] currentColor;
     private int[] currentHat;
@@ -124,6 +125,14 @@ public class CharacterSelect : MonoBehaviour {
             if(countDownTimer < 0)
             {
                 //TODO load main scene
+                for (int i = 0; i < 4; i++)
+                {
+                    ValueStoringScript vSS = valueStored.GetComponent<ValueStoringScript>();
+                    vSS.SetPlayerColor(i, colors[currentColor[i]]);
+                    vSS.SetPlayerObject(i, hats[currentHat[i]]);
+
+                }
+                SceneManager.LoadScene("GAME");
                 print("Game has Started");
             }
         }
