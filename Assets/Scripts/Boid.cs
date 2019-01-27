@@ -64,7 +64,7 @@ public class Boid : MonoBehaviour
 
         rb.velocity = new Vector3(Random.Range(-5, 5), 0, Random.Range(-5, 5));
 
-        MoveToWaypoint();
+        MoveToPlayer();
     }
 
     void FixedUpdate()
@@ -133,12 +133,16 @@ public class Boid : MonoBehaviour
                 navmesh.ResetTarget();
                 if (leader == null)
                     rb.velocity = new Vector3(0, 0, 0);
+
                 toWaypoint = false;
 
                 // then we're going by waypoint
                 if(leader == null)
                 {
-
+                    if(currentWaypoint.name == "Entrance")
+                    {
+                        return new Vector3(0, 0, 0);
+                    }
                     if(currentWaypoint != null && currentWaypoint.isInside)
                     {
                         MoveToPlayer();
@@ -275,5 +279,7 @@ public class Boid : MonoBehaviour
             nearby.Remove(b);
         }
     }
+
+
 
 }

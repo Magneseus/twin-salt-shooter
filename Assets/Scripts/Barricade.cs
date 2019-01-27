@@ -6,7 +6,9 @@ public class Barricade : PlayerInteractable
 {
     public GameObject barricadeObj;
     public GameObject barricadePhysical;
-    private bool IsBroken = true;
+    public bool IsBroken = true;
+
+    private List<Boid> ghosts;
 
     public float EnemySecondsToBreak;
     public float PlayerSecondsToBuild;
@@ -15,6 +17,8 @@ public class Barricade : PlayerInteractable
 
     private void Start()
     {
+        ghosts = new List<Boid>();
+
         if (IsBroken)
             SecondsToComplete = PlayerSecondsToBuild;
         else
@@ -23,7 +27,6 @@ public class Barricade : PlayerInteractable
         ps = GetComponentInChildren<ParticleSystem>();
         ps.Stop();
     }
-
 
     public override void Interact(GameObject interactor)
     {
@@ -38,6 +41,7 @@ public class Barricade : PlayerInteractable
         if (!IsBroken && interactor.tag == "Enemy")
         {
             IsInteracting = true;
+            ghosts.Add(interactor.GetComponent<Boid>());
         }
     }
 
