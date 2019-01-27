@@ -22,7 +22,6 @@ public class Fades : MonoBehaviour {
         foreach (Renderer r in materials)
         {
             c = r.material.color;
-            //c.a = (Mathf.Sin(t*2)+1)/4;
             c.a = (-Mathf.Pow(Mathf.Sin(t), 5) + 1)/4;
             
             r.material.color = c;
