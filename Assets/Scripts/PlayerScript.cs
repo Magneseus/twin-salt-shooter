@@ -18,6 +18,7 @@ public class PlayerScript : MonoBehaviour
     private List<PlayerInteractable> interactables;
 
     private bool inputBlocked = false;
+    private float startingY = 0.0f;
 
     private Rewired.Player rePlayer;
     private CharacterController cc;
@@ -33,6 +34,7 @@ public class PlayerScript : MonoBehaviour
         cc = GetComponent<CharacterController>();
         movement = GetComponent<DualStickMovement>();
 
+        startingY = transform.position.y;
 
         // ADD CONTROLS HERE
         actionMap.Add("RBumper", GetComponent<Fire_Projectile>());
@@ -54,6 +56,11 @@ public class PlayerScript : MonoBehaviour
         DoInput();
         DoInteractables();
 	}
+
+    private void FixedUpdate()
+    {
+        transform.position = new Vector3(transform.position.x, startingY, transform.position.z);
+    }
 
     private void DoInput()
     {
