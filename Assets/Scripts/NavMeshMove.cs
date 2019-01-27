@@ -73,7 +73,7 @@ public class NavMeshMove : MonoBehaviour
     public bool TargetReached()
     {
         if (IsStopped())
-            return true; 
+            return true;
         return agent.remainingDistance <= agent.stoppingDistance;
     }
 
@@ -99,6 +99,7 @@ public class NavMeshMove : MonoBehaviour
                 }
             }
         }
+
 
         return targetLocation.x == float.MaxValue || targetPath == null;
     }
