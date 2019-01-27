@@ -9,6 +9,10 @@ public class PlayerScript : MonoBehaviour
     public string interactButton = "X Button";
     public GameObject playerObject;
     public GameObject handObject;
+    private Color playerColor;
+    public Renderer ObjectThatNeedsToChangeColor;
+    public GameObject hatPosition;
+    private GameObject hat;
 
     private Dictionary<string, PlayerUsable> actionMap;
     private List<PlayerInteractable> interactables;
@@ -163,5 +167,22 @@ public class PlayerScript : MonoBehaviour
         }
 
         return false;
+    }
+
+
+    public void SetColor(Color col)
+    {
+        playerColor = col;
+        ObjectThatNeedsToChangeColor.material.color = col;
+    }
+
+    public void SetHat(GameObject newHat)
+    {
+        hat = Instantiate(newHat, hatPosition.transform.position, Quaternion.identity, hatPosition.transform);
+        hat.GetComponentInChildren<Renderer>().material.color = playerColor;
+        Vector3 rot = hat.transform.rotation.eulerAngles;
+        rot = new Vector3(rot.x, rot.y + 180, rot.z);
+        hat.transform.rotation = Quaternion.Euler(rot);
+        hat.transform.localScale = new Vector3(1 / transform.localScale.x, 1 / transform.localScale.y, 1 / transform.localScale.z);
     }
 }
