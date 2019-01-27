@@ -26,6 +26,7 @@ public class Projectile : MonoBehaviour {
 	void Update () {
         currentLife += Time.deltaTime;
         transform.Translate(transform.forward * Time.deltaTime * speed);
+        //transform.LookAt(transform.forward);
         if (currentLife >= maxLifeTime)
         {
             Destroy(gameObject);
