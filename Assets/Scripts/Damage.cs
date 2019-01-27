@@ -61,7 +61,7 @@ public class Damage : MonoBehaviour
 
     private void OnTriggerEnter(Collider collision)
     {
-        if (this.gameObject.name == "DamageArea" && collision.gameObject.tag == "Enemy")
+        if (this.gameObject.tag == "PlayerDamage" && collision.gameObject.tag == "Enemy")
         {
             print(collision.name + "trig");
             Health h = collision.gameObject.GetComponent<Health>();

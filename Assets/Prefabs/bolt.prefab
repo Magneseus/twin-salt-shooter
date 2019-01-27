@@ -22,7 +22,6 @@ GameObject:
   - component: {fileID: 114114772820583770}
   - component: {fileID: 136390001951563412}
   - component: {fileID: 54296158627323770}
-  - component: {fileID: 114578756437121718}
   m_Layer: 0
   m_Name: bolt
   m_TagString: PlayerDamage
@@ -144,24 +143,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isCross: 1
   childObj: {fileID: 1789270758894370}
+  explosion: {fileID: 1958822254902350, guid: dbfbefbdb144b5d4daab71585ac87544, type: 2}
   speedRot: 10
   maxLifeTime: 3
   speed: 40
   rotationOffset: 2
---- !u!114 &114578756437121718
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1437522614545440}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 65b062885bd443844a4b158324b939dc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  damagePerTick: 4
-  secsPerTick: 0.5
-  numTicks: 1
 --- !u!136 &136390001951563412
 CapsuleCollider:
   m_ObjectHideFlags: 1

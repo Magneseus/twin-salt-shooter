@@ -7,6 +7,7 @@ public class Projectile : MonoBehaviour {
     public bool isCross;
     private Vector3 randRotate;
     public GameObject childObj;
+    public GameObject explosion;
     public float speedRot;
     public float maxLifeTime;
     private float currentLife;
@@ -54,5 +55,14 @@ public class Projectile : MonoBehaviour {
         {
             Destroy(gameObject);
         }
+
+        if (collision.gameObject.tag == "Enemy" && isCross)
+        {
+            Instantiate(explosion, transform.position, Quaternion.identity);
+            Destroy(gameObject);
+        }
     }
+
+   
+
 }
