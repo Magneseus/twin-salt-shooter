@@ -456,9 +456,11 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4321695679910812}
+  - component: {fileID: 65571608137868844}
+  - component: {fileID: 114073439220027422}
   m_Layer: 0
   m_Name: Window
-  m_TagString: Untagged
+  m_TagString: Interactable
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -711,7 +713,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &4041769236558394
 Transform:
   m_ObjectHideFlags: 1
@@ -2739,6 +2741,18 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!65 &65571608137868844
+BoxCollider:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1678502618033428}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.07970271, y: 0.10887124, z: 0.11304916}
+  m_Center: {x: -0.0006671532, y: 0.027048191, z: -0.02652457}
 --- !u!65 &65635473387822076
 BoxCollider:
   m_ObjectHideFlags: 1
@@ -2747,7 +2761,7 @@ BoxCollider:
   m_GameObject: {fileID: 1067767736793686}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
@@ -2788,3 +2802,22 @@ Light:
   m_UseColorTemperature: 0
   m_ShadowRadius: 0
   m_ShadowAngle: 0
+--- !u!114 &114073439220027422
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1678502618033428}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9f613563edbb0044dbf9a09a4b98fe78, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  IsBlocking: 0
+  PercentComplete: 0
+  SecondsToComplete: 5
+  PercentDecayPerSecond: 0
+  barricadeObj: {fileID: 1995111385300680}
+  barricadePhysical: {fileID: 1067767736793686}
+  EnemySecondsToBreak: 10
+  PlayerSecondsToBuild: 5

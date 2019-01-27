@@ -19,6 +19,8 @@ public class PlayerInteractable : MonoBehaviour
     public virtual void Interact(GameObject interactor)
     {
         IsInteracting = true;
+
+        Debug.Log("test");
     }
 
     public virtual void StopInteract(GameObject interactor)
